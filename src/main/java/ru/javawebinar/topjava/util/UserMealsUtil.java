@@ -36,7 +36,7 @@ public class UserMealsUtil {
 
             caloriesByDate.put(date, caloriesByDate.getOrDefault(date, 0) + userMeal.getCalories());
 
-            if (time.isAfter(startTime) && time.isBefore(endTime))
+            if (TimeUtil.isBetween(time, startTime, endTime))
                 filteredMeals.add(userMeal);
         }
 
