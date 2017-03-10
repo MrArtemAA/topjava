@@ -29,4 +29,8 @@ public class UserMealWithExceed {
         this.exceed = exceed;
     }
 
+    @Override
+    public String toString() {
+        return String.format("%s, %s (%s) - %s", dateTime.toString(), description, String.valueOf(calories), String.valueOf(exceed));
+    }
 }
