@@ -34,7 +34,7 @@ public class UserMealsUtil {
             LocalDate date = userMeal.getDateTime().toLocalDate();
             LocalTime time = userMeal.getDateTime().toLocalTime();
 
-            caloriesByDate.put(date, caloriesByDate.getOrDefault(date, 0) + userMeal.getCalories());
+            caloriesByDate.merge(date, userMeal.getCalories(), (integer, integer2) -> integer + integer2);
 
             if (TimeUtil.isBetween(time, startTime, endTime))
                 filteredMeals.add(userMeal);
