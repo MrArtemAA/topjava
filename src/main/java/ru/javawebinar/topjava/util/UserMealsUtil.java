@@ -5,6 +5,8 @@ import ru.javawebinar.topjava.model.UserMealWithExceed;
 
 import java.time.*;
 import java.util.*;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 /**
  * GKislin
@@ -26,28 +28,31 @@ public class UserMealsUtil {
     }
 
     public static List<UserMealWithExceed> getFilteredWithExceeded(List<UserMeal> mealList, LocalTime startTime, LocalTime endTime, int caloriesPerDay) {
-        Map<LocalDate, Integer> caloriesByDate = new HashMap<>();
-        List<UserMealWithExceed> result = new ArrayList<>();
+        Map<LocalDate, Integer> caloriesByDate;
+        caloriesByDate = mealList.stream()
+                .collect(Collectors.toMap());
 
-        mealList.forEach(userMeal -> {
-                    LocalDate date = userMeal.getDateTime().toLocalDate();
+        /*
+        mealList.forEach((UserMeal userMeal) -> {
+            LocalDate date = userMeal.getDateTime().toLocalDate();
 
-                    Integer value = caloriesByDate.getOrDefault(date, 0);
-                    caloriesByDate.put(date, value + userMeal.getCalories());
-                });
+            //Integer value = caloriesByDate.getOrDefault(date, 0);
+            //caloriesByDate.put(date, value + userMeal.getCalories());
+            caloriesByDate.merge(date, userMeal.getCalories(), (value, newValue) -> value + newValue);
+        });
+        */
 
-        mealList.stream()
+        return mealList.stream()
                 .filter(userMeal -> {
                     LocalTime time = userMeal.getDateTime().toLocalTime();
                     return TimeUtil.isBetween(time, startTime, endTime);
                 })
-                .forEach(userMeal -> {
+                .map(userMeal -> {
                     LocalDate date = userMeal.getDateTime().toLocalDate();
                     UserMealWithExceed userMealWithExceed = new UserMealWithExceed(userMeal, caloriesByDate.get(date) > caloriesPerDay);
-                    result.add(userMealWithExceed);
                     System.out.println(userMealWithExceed);
-                });
-
-        return result;
+                    return userMealWithExceed;
+                })
+                .collect(Collectors.toList());
     }
 }
