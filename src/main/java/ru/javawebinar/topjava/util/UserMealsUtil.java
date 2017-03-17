@@ -29,12 +29,11 @@ public class UserMealsUtil {
     }
 
     public static List<UserMealWithExceed> getFilteredWithExceeded(List<UserMeal> mealList, LocalTime startTime, LocalTime endTime, int caloriesPerDay) {
-        Map<LocalDate, Integer> caloriesByDate;
-        caloriesByDate = mealList.parallelStream()
+        Map<LocalDate, Integer> caloriesByDate = mealList.parallelStream()
                 .collect(Collectors.toMap(
                         UserMeal::toLocalDate,
                         UserMeal::getCalories,
-                        (integer, integer2) -> integer + integer2
+                        Integer::sum
                 ));
 
         return mealList.parallelStream()
