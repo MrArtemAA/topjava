@@ -38,7 +38,11 @@ public class UserMealsUtil {
 
         return mealList.parallelStream()
                 .filter(userMeal -> TimeUtil.isBetween(userMeal.toLocalTime(), startTime, endTime))
-                .map(userMeal -> new UserMealWithExceed(userMeal, caloriesByDate.get(userMeal.toLocalDate()) > caloriesPerDay))
+                .map(userMeal -> new UserMealWithExceed(
+                        userMeal.getDateTime(),
+                        userMeal.getDescription(),
+                        userMeal.getCalories(),
+                        caloriesByDate.get(userMeal.toLocalDate()) > caloriesPerDay))
                 .collect(Collectors.toList());
     }
 }
