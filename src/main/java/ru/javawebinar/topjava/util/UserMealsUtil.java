@@ -41,7 +41,12 @@ public class UserMealsUtil {
         List<UserMealWithExceed> result = new ArrayList<>();
         for (UserMeal userMeal : filteredMeals) {
             LocalDate date = userMeal.getDateTime().toLocalDate();
-            result.add(new UserMealWithExceed(userMeal, caloriesByDate.get(date) > caloriesPerDay));
+            result.add(new UserMealWithExceed(
+                    userMeal.getDateTime(),
+                    userMeal.getDescription(),
+                    userMeal.getCalories(),
+                    caloriesByDate.get(date) > caloriesPerDay
+            ));
         }
 
         return result;
