@@ -22,7 +22,7 @@
                     <tr bgcolor="green">
                 </c:when>
             </c:choose>
-                <td>${meal.dateTime}</td>
+                <td>${requestScope.dtf.format(meal.dateTime)}</td>
                 <td>${meal.description}</td>
                 <td>${meal.calories}</td>
             </tr>
