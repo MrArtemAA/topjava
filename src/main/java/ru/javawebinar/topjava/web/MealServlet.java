@@ -22,7 +22,7 @@ public class MealServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         List<MealWithExceed> list = MealsUtil.getFilteredWithExceeded(MealsUtil.getMeals(),
-                LocalTime.of(7, 0), LocalTime.of(12, 0), 2000);
+                LocalTime.MIN, LocalTime.MAX, 2000);
 
         request.setAttribute("meals", list);
         request.setAttribute("dtf", dtf);
