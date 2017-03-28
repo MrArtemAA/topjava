@@ -6,8 +6,8 @@
 </head>
 <body>
     <h2><a href="index.html">Home</a></h2>
-    <p><a href="mealController?action=create">Add meal</a></p>
     <h2>Meal list</h2>
+    <p><a href="mealController?action=create">Add meal</a></p>
     <table border="1">
         <tr>
             <td>Дата и время</td>
@@ -17,14 +17,7 @@
             <td></td>
         </tr>
         <c:forEach items="${requestScope.meals}" var="meal">
-            <c:choose>
-                <c:when test="${meal.exceed}">
-                    <tr bgcolor="red">
-                </c:when>
-                <c:when test="${not meal.exceed}">
-                    <tr bgcolor="green">
-                </c:when>
-            </c:choose>
+            ${meal.exceed ? '<tr bgcolor="red">' : '<tr bgcolor="green">'}
                 <td>${requestScope.dtf.format(meal.dateTime)}</td>
                 <td>${meal.description}</td>
                 <td>${meal.calories}</td>

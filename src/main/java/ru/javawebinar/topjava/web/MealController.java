@@ -23,6 +23,7 @@ public class MealController extends HttpServlet {
 
     private static final String CREATE_UPDATE = "/meal.jsp";
     private static final String LIST = "/meals.jsp";
+    private static final String LIST_REDIRECT = "mealController";
 
     private static MealDao dao = new MemoryMealDao();
 
@@ -30,41 +31,43 @@ public class MealController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String forward;
+        boolean forward = true;
+        String forwardPage = CREATE_UPDATE;
         String action = request.getParameter("action");
 
-        request.setAttribute("dtf", dtf);
+        if (action == null) {
+            forwardPage = LIST;
 
-        if (action.equalsIgnoreCase("delete")){
+            List<MealWithExceed> list = MealsUtil.getFilteredWithExceeded(dao.getAll(),
+                    LocalTime.MIN, LocalTime.MAX, 2000);
+            request.setAttribute("dtf", dtf);
+            request.setAttribute("meals", list);
+
+        } else if (action.equalsIgnoreCase("delete")){
+            forward = false;
+
             long id = Long.parseLong(request.getParameter("id"));
             dao.delete(id);
-            forward = LIST;
 
-            List<MealWithExceed> list = MealsUtil.getFilteredWithExceeded(dao.getAll(),
-                    LocalTime.MIN, LocalTime.MAX, 2000);
-            request.setAttribute("meals", list);
-        } else if (action.equalsIgnoreCase("update")){
-            forward = CREATE_UPDATE;
-
+        } else if (action.equalsIgnoreCase("update")) {
             long id = Long.parseLong(request.getParameter("id"));
-            Meal meal = dao.get(id);
-            request.setAttribute("meal", meal);
-        } else if (action.equalsIgnoreCase("list")){
-            forward = LIST;
 
-            List<MealWithExceed> list = MealsUtil.getFilteredWithExceeded(dao.getAll(),
-                    LocalTime.MIN, LocalTime.MAX, 2000);
-            request.setAttribute("meals", list);
-        } else {
-            forward = CREATE_UPDATE;
+            Meal meal = dao.get(id);
+            request.setAttribute("dtf", dtf);
+            request.setAttribute("meal", meal);
+
         }
 
-        request.getRequestDispatcher(forward).forward(request, response);
+        if (forward)
+            request.getRequestDispatcher(forwardPage).forward(request, response);
+        else
+            response.sendRedirect(LIST_REDIRECT);
+
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        request.setCharacterEncoding("UTF-8");
         LocalDateTime dateTime = LocalDateTime.parse(request.getParameter("dateTime"));
         String description = request.getParameter("description");
         int calories = Integer.valueOf(request.getParameter("calories"));
@@ -78,9 +81,7 @@ public class MealController extends HttpServlet {
             dao.update(meal);
         }
 
-        request.setAttribute("dtf", dtf);
-        request.setAttribute("meals", getMeals());
-        request.getRequestDispatcher(LIST).forward(request, response);
+        response.sendRedirect(LIST_REDIRECT);
     }
 
     private List<MealWithExceed> getMeals() {

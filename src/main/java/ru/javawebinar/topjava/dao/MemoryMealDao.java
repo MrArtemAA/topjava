@@ -30,12 +30,12 @@ public class MemoryMealDao implements MealDao {
 
     @Override
     public void delete(long id) {
-
+        meals.remove(id);
     }
 
     @Override
     public void update(Meal meal) {
-
+        meals.put(meal.getId(), meal);
     }
 
     @Override
