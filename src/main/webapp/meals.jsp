@@ -17,7 +17,7 @@
             <td></td>
         </tr>
         <c:forEach items="${requestScope.meals}" var="meal">
-            ${meal.exceed ? '<tr bgcolor="red">' : '<tr bgcolor="green">'}
+            <tr bgcolor="${meal.exceed ? 'red' : 'green'}">
                 <td>${requestScope.dtf.format(meal.dateTime)}</td>
                 <td>${meal.description}</td>
                 <td>${meal.calories}</td>

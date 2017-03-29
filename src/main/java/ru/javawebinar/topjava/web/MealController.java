@@ -25,7 +25,7 @@ public class MealController extends HttpServlet {
     private static final String LIST = "/meals.jsp";
     private static final String LIST_REDIRECT = "mealController";
 
-    private static MealDao dao = new MemoryMealDao();
+    private MealDao dao = new MemoryMealDao();
 
     private static final DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm");
 
@@ -82,11 +82,6 @@ public class MealController extends HttpServlet {
         }
 
         response.sendRedirect(LIST_REDIRECT);
-    }
-
-    private List<MealWithExceed> getMeals() {
-        return MealsUtil.getFilteredWithExceeded(dao.getAll(),
-                LocalTime.MIN, LocalTime.MAX, 2000);
     }
 
 }

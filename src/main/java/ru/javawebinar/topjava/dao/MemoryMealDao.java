@@ -14,9 +14,9 @@ import java.util.concurrent.atomic.AtomicLong;
  */
 public class MemoryMealDao implements MealDao {
 
-    private static AtomicLong counter = new AtomicLong(0);
+    private AtomicLong counter = new AtomicLong(0);
 
-    private static Map<Long, Meal> meals = new ConcurrentHashMap<>();
+    private Map<Long, Meal> meals = new ConcurrentHashMap<>();
 
     public MemoryMealDao() {
         MealsUtil.getMeals().forEach(this::add);
