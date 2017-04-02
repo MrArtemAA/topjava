@@ -24,9 +24,10 @@ public class SpringMain {
 
             MealRestController mealRestController = appCtx.getBean(MealRestController.class);
             mealRestController.getAll();
-            mealRestController.getFiltered(LocalDate.of(2015, Month.MAY, 31), null, null, null);
-            mealRestController.create(new Meal(1, LocalDateTime.of(2015, Month.MAY, 29, 10, 0), "Завтрак", 500));
-            mealRestController.getFiltered(null, null, null, null);
+            //mealRestController.getFiltered(LocalDate.of(2015, Month.MAY, 31), null, null, null);
+            //mealRestController.create(new Meal(1, LocalDateTime.of(2015, Month.MAY, 29, 10, 0), "Завтрак", 500));
+            //mealRestController.getFiltered(null, null, null, null);
+            mealRestController.get(2);
         }
     }
 }

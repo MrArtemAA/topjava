@@ -71,7 +71,7 @@ public class InMemoryMealRepositoryImpl implements MealRepository {
                     meal.getUserId() == userId && DateTimeUtil.isBetween(meal.getDate(), startDate, endDate)
                             && DateTimeUtil.isBetween(meal.getTime(), startTime, endTime)
                 )
-                .sorted(Comparator.comparing(Meal::getDate))
+                .sorted(Comparator.comparing(Meal::getDate).reversed())
                 .collect(Collectors.toList());
     }
 }
