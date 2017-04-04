@@ -14,15 +14,13 @@ import java.util.stream.Collectors;
 
 @Repository
 public class InMemoryUserRepositoryImpl implements UserRepository {
-    private static final Logger LOG = LoggerFactory.getLogger(InMemoryUserRepositoryImpl.class);
-
     private Map<Integer, User> repository = new ConcurrentHashMap<>();
     private AtomicInteger counter = new AtomicInteger(0);
 
     @Override
     public boolean delete(int id) {
         User user = repository.remove(id);
-        return user == null ? false : true;
+        return user != null;
     }
 
     @Override
@@ -42,18 +40,16 @@ public class InMemoryUserRepositoryImpl implements UserRepository {
     @Override
     public List<User> getAll() {
         return repository.values().stream()
-                .sorted(Comparator.comparing(NamedEntity::getName))
+                .sorted(Comparator.comparing(User::getName).thenComparing(User::getEmail))
                 .collect(Collectors.toList());
     }
 
     @Override
     public User getByEmail(String email) {
-        Optional<User> userOptional = repository.values().stream()
+        return repository.values().stream()
                 .filter(user -> user.getEmail().equals(email))
-                .findFirst();
-        if (userOptional.isPresent())
-            return userOptional.get();
-        return null;
+                .findFirst()
+                .orElse(null);
     }
 
 
