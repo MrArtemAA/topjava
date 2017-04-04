@@ -13,7 +13,6 @@ import ru.javawebinar.topjava.util.MealsUtil;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Collection;
-import java.util.Objects;
 import java.util.Optional;
 
 import static ru.javawebinar.topjava.util.ValidationUtil.checkNew;
@@ -30,28 +29,28 @@ public class MealRestController {
     public Meal create(Meal meal) {
         LOG.info("create: " + meal);
         checkNew(meal);
-        return service.save(AuthorizedUser.id(), meal);
+        return service.save(AuthorizedUser.getId(), meal);
     }
 
     public Meal get(int id) {
         LOG.info("get: " + id);
-        return service.get(AuthorizedUser.id(), id);
+        return service.get(AuthorizedUser.getId(), id);
     }
 
     public void update(Meal meal, int id) {
         LOG.info("update: " + meal);
         checkIdConsistent(meal, id);
-        service.save(AuthorizedUser.id(), meal);
+        service.save(AuthorizedUser.getId(), meal);
     }
 
     public void delete(int id) {
         LOG.info("delete: " + id);
-        service.delete(AuthorizedUser.id(), id);
+        service.delete(AuthorizedUser.getId(), id);
     }
 
     public Collection<MealWithExceed> getAll() {
         LOG.info("getAll:");
-        Collection<MealWithExceed> result = MealsUtil.getWithExceeded(service.getAll(AuthorizedUser.id()), AuthorizedUser.getCaloriesPerDay());
+        Collection<MealWithExceed> result = MealsUtil.getWithExceeded(service.getAll(AuthorizedUser.getId()), AuthorizedUser.getCaloriesPerDay());
         LOG.info(result.size() + ": " + result.toString());
         return result;
     }
@@ -63,7 +62,7 @@ public class MealRestController {
         endTime = Optional.ofNullable(endTime).orElse(LocalTime.MAX);
 
         LOG.info("getFiltered: ", startDate, startTime, endDate, endTime);
-        Collection<MealWithExceed> result = MealsUtil.getWithExceeded(service.getFiltered(AuthorizedUser.id(),
+        Collection<MealWithExceed> result = MealsUtil.getWithExceeded(service.getFiltered(AuthorizedUser.getId(),
                 startDate, startTime, endDate, endTime), AuthorizedUser.getCaloriesPerDay());
         LOG.info(result.size() + ": " + result.toString());
         return result;
