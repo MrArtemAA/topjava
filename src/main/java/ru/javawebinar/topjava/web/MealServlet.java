@@ -60,17 +60,10 @@ public class MealServlet extends HttpServlet {
     protected void postMeal(HttpServletRequest request) {
         String id = request.getParameter("id");
 
-        Meal meal = new Meal(id.isEmpty() ? null : Integer.valueOf(id), AuthorizedUser.getId(),
+        mealRestController.create(id.isEmpty() ? null : Integer.valueOf(id),
                 LocalDateTime.parse(request.getParameter("dateTime")),
                 request.getParameter("description"),
                 Integer.valueOf(request.getParameter("calories")));
-
-        LOG.info(meal.isNew() ? "Create {}" : "Update {}", meal);
-        if (meal.isNew())
-            mealRestController.create(meal);
-        else {
-            mealRestController.update(meal, Integer.valueOf(id));
-        }
     }
 
     protected void postFilter(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -104,7 +97,7 @@ public class MealServlet extends HttpServlet {
             case "create":
             case "update":
                 final Meal meal = action.equals("create") ?
-                        new Meal(AuthorizedUser.getId(), LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES), "", 1000) :
+                        new Meal(null, LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES), "", 1000) :
                         mealRestController.get(getId(request));
                 request.setAttribute("meal", meal);
                 request.getRequestDispatcher("/meal.jsp").forward(request, response);

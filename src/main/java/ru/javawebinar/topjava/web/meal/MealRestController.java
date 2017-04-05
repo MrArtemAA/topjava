@@ -11,6 +11,7 @@ import ru.javawebinar.topjava.to.MealWithExceed;
 import ru.javawebinar.topjava.util.MealsUtil;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Collection;
 import java.util.Optional;
@@ -66,6 +67,17 @@ public class MealRestController {
                 startDate, startTime, endDate, endTime), AuthorizedUser.getCaloriesPerDay());
         LOG.info(result.size() + ": " + result.toString());
         return result;
+    }
+
+    public Meal create(Integer id, LocalDateTime dateTime, String description, int calories) {
+        Meal meal = new Meal(id, AuthorizedUser.getId(), dateTime, description, calories);
+        LOG.info(meal.isNew() ? "Create {}" : "Update {}", meal);
+        if (meal.isNew())
+            return create(meal);
+        else {
+            update(meal, Integer.valueOf(id));
+            return meal;
+        }
     }
 
 }
