@@ -7,6 +7,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import ru.javawebinar.topjava.AuthorizedUser;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.model.MealFilter;
+import ru.javawebinar.topjava.util.DateTimeUtil;
 import ru.javawebinar.topjava.web.meal.MealRestController;
 
 import javax.servlet.ServletConfig;
@@ -74,11 +75,11 @@ public class MealServlet extends HttpServlet {
 
     protected void postFilter(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         MealFilter filter = new MealFilter();
-        filter.setStartDate(getDate(request.getParameter("startDate")));
-        filter.setEndDate(getDate(request.getParameter("endDate")));
+        filter.setStartDate(DateTimeUtil.parseDate(request.getParameter("startDate")));
+        filter.setEndDate(DateTimeUtil.parseDate(request.getParameter("endDate")));
 
-        filter.setStartTime(getTime(request.getParameter( "startTime")));
-        filter.setEndTime(getTime(request.getParameter("endTime")));
+        filter.setStartTime(DateTimeUtil.parseTime(request.getParameter( "startTime")));
+        filter.setEndTime(DateTimeUtil.parseTime(request.getParameter("endTime")));
 
         LOG.info("getFiltered");
 
@@ -87,20 +88,6 @@ public class MealServlet extends HttpServlet {
                 mealRestController.getFiltered(filter.getStartDate(), filter.getStartTime(),
                         filter.getEndDate(), filter.getEndTime()));
         request.getRequestDispatcher("/meals.jsp").forward(request, response);
-    }
-
-    protected LocalDate getDate(String paramValue) {
-        if (paramValue == null || paramValue.equals(""))
-            return null;
-        else
-            return LocalDate.parse(paramValue);
-    }
-
-    protected LocalTime getTime(String paramValue) {
-        if (paramValue == null || paramValue.equals(""))
-            return null;
-        else
-            return LocalTime.parse(paramValue);
     }
 
     @Override
