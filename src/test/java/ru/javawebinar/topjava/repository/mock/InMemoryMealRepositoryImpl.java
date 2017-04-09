@@ -23,6 +23,7 @@ import java.util.stream.Stream;
 
 import static ru.javawebinar.topjava.UserTestData.ADMIN_ID;
 import static ru.javawebinar.topjava.UserTestData.USER_ID;
+import static ru.javawebinar.topjava.model.BaseEntity.START_SEQ;
 
 @Repository
 public class InMemoryMealRepositoryImpl implements MealRepository {
@@ -32,14 +33,7 @@ public class InMemoryMealRepositoryImpl implements MealRepository {
 
     // Map  userId -> (mealId-> meal)
     private Map<Integer, Map<Integer, Meal>> repository = new ConcurrentHashMap<>();
-    private AtomicInteger counter = new AtomicInteger(0);
-
-    {
-        MealsUtil.MEALS.forEach(um -> save(um, USER_ID));
-
-        save(new Meal(LocalDateTime.of(2015, Month.JUNE, 1, 14, 0), "Админ ланч", 510), ADMIN_ID);
-        save(new Meal(LocalDateTime.of(2015, Month.JUNE, 1, 21, 0), "Админ ужин", 1500), ADMIN_ID);
-    }
+    private AtomicInteger counter = new AtomicInteger(START_SEQ + 1);
 
     @Override
     public Meal save(Meal meal, int userId) {
