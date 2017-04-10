@@ -21,8 +21,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static ru.javawebinar.topjava.UserTestData.ADMIN_ID;
-import static ru.javawebinar.topjava.UserTestData.USER_ID;
 import static ru.javawebinar.topjava.model.BaseEntity.START_SEQ;
 
 @Repository
