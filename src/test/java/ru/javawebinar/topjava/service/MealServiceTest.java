@@ -12,14 +12,13 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import ru.javawebinar.topjava.MealTestData;
 import ru.javawebinar.topjava.UserTestData;
 import ru.javawebinar.topjava.model.Meal;
+import ru.javawebinar.topjava.util.DbPopulator;
 import ru.javawebinar.topjava.util.exception.NotFoundException;
 
+import static ru.javawebinar.topjava.MealTestData.*;
 import static ru.javawebinar.topjava.UserTestData.ADMIN;
 import static ru.javawebinar.topjava.UserTestData.USER_ID;
 import static ru.javawebinar.topjava.UserTestData.ADMIN_ID;
-import static ru.javawebinar.topjava.MealTestData.MEALS_FOR_USER;
-import static ru.javawebinar.topjava.MealTestData.MEALS_FOR_ADMIN;
-import static ru.javawebinar.topjava.MealTestData.MATCHER;
 import static ru.javawebinar.topjava.model.BaseEntity.START_SEQ;
 
 import java.time.LocalDateTime;
@@ -32,11 +31,12 @@ import static org.junit.Assert.*;
 /**
  * Created by ArtemAA on 10.04.2017.
  */
-@ContextConfiguration("classpath:spring/spring-test-app.xml")
+@ContextConfiguration({
+        "classpath:spring/spring-app.xml",
+        "classpath:spring/spring-db.xml"
+})
 @RunWith(SpringJUnit4ClassRunner.class)
 public class MealServiceTest {
-
-    private static final Logger LOG = LoggerFactory.getLogger(MealServiceTest.class);
 
     static {
         SLF4JBridgeHandler.install();
@@ -45,23 +45,12 @@ public class MealServiceTest {
     @Autowired
     private MealService service;
 
-    @Before
-    public void setUp() {
-        LOG.info(MEALS_FOR_USER.toString());
-        MEALS_FOR_USER.forEach(meal -> {
-            if (meal.isNew())
-                service.save(meal, USER_ID);
-            else
-                service.update(meal, USER_ID);
-        });
+    @Autowired
+    private DbPopulator dbPopulator;
 
-        LOG.info(MEALS_FOR_ADMIN.toString());
-        MEALS_FOR_ADMIN.forEach(meal -> {
-            if (meal.isNew())
-                service.save(meal, ADMIN_ID);
-            else
-                service.update(meal, ADMIN_ID);
-        });
+    @Before
+    public void setUp() throws Exception {
+        dbPopulator.execute();
     }
 
     @Test
@@ -90,10 +79,16 @@ public class MealServiceTest {
 
     @Test
     public void getBetweenDates() throws Exception {
+        List<Meal> list = service.getBetweenDates(DATE1.toLocalDate(), DATE1.toLocalDate(), USER_ID);
+        MATCHER.assertCollectionEquals(MEALS_FOR_USER, list);
     }
 
     @Test
     public void getBetweenDateTimes() throws Exception {
+        List<Meal> list = service.getBetweenDateTimes(DATE1, DATE2, USER_ID);
+        List<Meal> expected = new ArrayList<>(MEALS_FOR_USER);
+        expected.remove(2);
+        MATCHER.assertCollectionEquals(list, expected);
     }
 
     @Test
