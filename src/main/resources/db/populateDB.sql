@@ -13,10 +13,10 @@ INSERT INTO user_roles (role, user_id) VALUES
   ('ROLE_USER', 100000),
   ('ROLE_ADMIN', 100001);
 
-INSERT INTO meals (user_id, dateTime, description, calories) VALUES
-  (100000, to_timestamp('08.04.2017 18:00:00', 'DD.MM.YYYY HH24:MI:SS'), 'Ужин', 500),
-  (100000, to_timestamp('08.04.2017 13:00:00', 'DD.MM.YYYY HH24:MI:SS'), 'Обед', 1000),
-  (100000, to_timestamp('08.04.2017 07:00:00', 'DD.MM.YYYY HH24:MI:SS'), 'Завтрак', 500),
-  (100001, to_timestamp('09.04.2017 18:00:00', 'DD.MM.YYYY HH24:MI:SS'), 'Ужин', 1000),
-  (100001, to_timestamp('09.04.2017 13:00:00', 'DD.MM.YYYY HH24:MI:SS'), 'Обед', 510),
-  (100001, to_timestamp('09.04.2017 07:00:00', 'DD.MM.YYYY HH24:MI:SS'), 'Завтрак', 500);
+INSERT INTO meals (user_id, datetime, description, calories) VALUES
+  (100000, '2017-04-08 18:00:00', 'Ужин', 500),
+  (100000, '2017-04-08 13:00:00', 'Обед', 1000),
+  (100000, '2017-04-08 07:00:00', 'Завтрак', 500),
+  (100001, '2017-04-09 18:00:00', 'Ужин', 1000),
+  (100001, '2017-04-09 13:00:00', 'Обед', 510),
+  (100001, '2017-04-09 07:00:00', 'Завтрак', 500);

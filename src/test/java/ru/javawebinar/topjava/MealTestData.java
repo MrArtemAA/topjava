@@ -12,17 +12,19 @@ import java.util.List;
 
 public class MealTestData {
 
-    public static final List<Meal> MEALS_FOR_USER = Arrays.asList(
-            new Meal(START_SEQ + 2, LocalDateTime.of(2017, Month.APRIL, 8, 18, 0), "Ужин", 500),
-            new Meal(START_SEQ + 3, LocalDateTime.of(2017, Month.APRIL, 8, 13, 0), "Обед", 1000),
-            new Meal(START_SEQ + 4, LocalDateTime.of(2017, Month.APRIL, 8, 7, 0), "Завтрак", 500)
-    );
+    public static final Meal USER_MEAL_1 = new Meal(START_SEQ + 2,
+            LocalDateTime.of(2017, Month.APRIL, 8, 18, 0), "Ужин", 500);
+    public static final Meal USER_MEAL_2 = new Meal(START_SEQ + 3,
+            LocalDateTime.of(2017, Month.APRIL, 8, 13, 0), "Обед", 1000);
+    public static final Meal USER_MEAL_3 = new Meal(START_SEQ + 4,
+            LocalDateTime.of(2017, Month.APRIL, 8, 7, 0), "Завтрак", 500);
 
-    public static final List<Meal> MEALS_FOR_ADMIN = Arrays.asList(
-            new Meal(START_SEQ + 5, LocalDateTime.of(2017, Month.APRIL, 9, 18, 0), "Ужин", 1000),
-            new Meal(START_SEQ + 6, LocalDateTime.of(2017, Month.APRIL, 9, 13, 0), "Обед", 510),
-            new Meal(START_SEQ + 7, LocalDateTime.of(2017, Month.APRIL, 9, 7, 0), "Завтрак", 500)
-    );
+    public static final Meal ADMIN_MEAL_1 = new Meal(START_SEQ + 5,
+            LocalDateTime.of(2017, Month.APRIL, 9, 18, 0), "Ужин", 1000);
+    public static final Meal ADMIN_MEAL_2 = new Meal(START_SEQ + 6,
+            LocalDateTime.of(2017, Month.APRIL, 9, 13, 0), "Обед", 510);
+    public static final Meal ADMIN_MEAL_3 = new Meal(START_SEQ + 7,
+            LocalDateTime.of(2017, Month.APRIL, 9, 7, 0), "Завтрак", 500);
 
     public static final LocalDateTime DATE1 = LocalDateTime.of(2017, Month.APRIL, 8, 13,0);
     public static final LocalDateTime DATE2 = LocalDateTime.of(2017, Month.APRIL, 8, 20,0);
