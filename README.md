@@ -1,6 +1,6 @@
 Java Enterprise Online Project 
 ===============================
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/d94e3b14b92c40feb71a2d2e80644de8)](https://www.codacy.com/app/MrArtemAA/topjava?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=MrArtemAA/topjava&amp;utm_campaign=Badge_Grade)[![Dependency Status](https://dependencyci.com/github/MrArtemAA/topjava/badge)](https://dependencyci.com/github/MrArtemAA/topjava)[![Build Status](https://travis-ci.org/MrArtemAA/topjava.svg?branch=master)](https://travis-ci.org/MrArtemAA/topjava)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/d94e3b14b92c40feb71a2d2e80644de8)](https://www.codacy.com/app/MrArtemAA/topjava?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=MrArtemAA/topjava&amp;utm_campaign=Badge_Grade) [![Dependency Status](https://dependencyci.com/github/MrArtemAA/topjava/badge)](https://dependencyci.com/github/MrArtemAA/topjava) [![Build Status](https://travis-ci.org/MrArtemAA/topjava.svg?branch=master)](https://travis-ci.org/MrArtemAA/topjava)
 
 Наиболее востребованные технологии /инструменты / фреймворки Java Enterprise:
 Maven/ Spring/ Security/ JPA(Hibernate)/ REST(Jackson)/ Bootstrap(CSS)/ jQuery + plugins.
