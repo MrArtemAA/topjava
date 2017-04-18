@@ -28,7 +28,7 @@ public class JpaMealRepositoryImpl implements MealRepository {
             em.persist(meal);
             return meal;
         } else {
-            if (userRef.getId() == meal.getUser().getId()) {
+            if (userRef.getId().equals(meal.getUser().getId())) {
                 return em.merge(meal);
             } else {
                 return null;
@@ -47,7 +47,7 @@ public class JpaMealRepositoryImpl implements MealRepository {
 
     @Override
     public Meal get(int id, int userId) {
-        List<Meal> meals = em.createNamedQuery(Meal.GET)
+        List<Meal> meals = em.createNamedQuery(Meal.GET, Meal.class)
                 .setParameter("id", id)
                 .setParameter("user_id", userId)
                 .getResultList();
@@ -56,14 +56,14 @@ public class JpaMealRepositoryImpl implements MealRepository {
 
     @Override
     public List<Meal> getAll(int userId) {
-        return em.createNamedQuery(Meal.GETBETWEEN)
+        return em.createNamedQuery(Meal.GETBETWEEN, Meal.class)
                 .setParameter("user_id", userId)
                 .getResultList();
     }
 
     @Override
     public List<Meal> getBetween(LocalDateTime startDate, LocalDateTime endDate, int userId) {
-        return em.createNamedQuery(Meal.GETBETWEENDATES)
+        return em.createNamedQuery(Meal.GETBETWEENDATES, Meal.class)
                 .setParameter("user_id", userId)
                 .setParameter("start_date", startDate)
                 .setParameter("end_date", endDate)

@@ -4,8 +4,12 @@ import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+import org.junit.rules.Stopwatch;
 import org.junit.rules.TestName;
+import org.junit.runner.Description;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.slf4j.bridge.SLF4JBridgeHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -18,6 +22,7 @@ import ru.javawebinar.topjava.util.exception.NotFoundException;
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.Arrays;
+import java.util.concurrent.TimeUnit;
 
 import static ru.javawebinar.topjava.MealTestData.*;
 import static ru.javawebinar.topjava.UserTestData.ADMIN_ID;
@@ -30,12 +35,19 @@ import static ru.javawebinar.topjava.UserTestData.USER_ID;
 @RunWith(SpringJUnit4ClassRunner.class)
 @Sql(scripts = "classpath:db/populateDB.sql", config = @SqlConfig(encoding = "UTF-8"))
 public class MealServiceTest {
+    private static final Logger LOG = LoggerFactory.getLogger(MealServiceTest.class);
 
     @Rule
     public final ExpectedException thrown = ExpectedException.none();
 
     @Rule
-    public final TestName name = new TestName();
+    public final Stopwatch stopwatch = new Stopwatch() {
+        @Override
+        protected void finished(long nanos, Description description) {
+            LOG.info("{} spent {} ms",
+                    description.getMethodName(), TimeUnit.NANOSECONDS.toMillis(nanos));
+        }
+    };
 
     static {
         SLF4JBridgeHandler.install();
@@ -85,7 +97,8 @@ public class MealServiceTest {
     @Test
     public void testUpdateNotFound() throws Exception {
         thrown.expect(NotFoundException.class);
-        service.update(MEAL1, ADMIN_ID);
+        Meal updated = getUpdated();
+        service.update(updated, ADMIN_ID);
     }
 
     @Test
