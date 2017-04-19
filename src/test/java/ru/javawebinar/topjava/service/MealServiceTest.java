@@ -1,11 +1,10 @@
 package ru.javawebinar.topjava.service;
 
-import org.junit.Assert;
+import org.junit.AfterClass;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.rules.Stopwatch;
-import org.junit.rules.TestName;
 import org.junit.runner.Description;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -21,7 +20,10 @@ import ru.javawebinar.topjava.util.exception.NotFoundException;
 
 import java.time.LocalDate;
 import java.time.Month;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import static ru.javawebinar.topjava.MealTestData.*;
@@ -36,6 +38,7 @@ import static ru.javawebinar.topjava.UserTestData.USER_ID;
 @Sql(scripts = "classpath:db/populateDB.sql", config = @SqlConfig(encoding = "UTF-8"))
 public class MealServiceTest {
     private static final Logger LOG = LoggerFactory.getLogger(MealServiceTest.class);
+    private static List<String> methodsRunTime = new ArrayList<>();
 
     @Rule
     public final ExpectedException thrown = ExpectedException.none();
@@ -44,8 +47,8 @@ public class MealServiceTest {
     public final Stopwatch stopwatch = new Stopwatch() {
         @Override
         protected void finished(long nanos, Description description) {
-            LOG.info("{} spent {} ms",
-                    description.getMethodName(), TimeUnit.NANOSECONDS.toMillis(nanos));
+            methodsRunTime.add(String.format("%s spent %d ms",
+                    description.getMethodName(), TimeUnit.NANOSECONDS.toMillis(nanos)));
         }
     };
 
@@ -55,6 +58,11 @@ public class MealServiceTest {
 
     @Autowired
     private MealService service;
+
+    @AfterClass
+    public static void tearDown() {
+        methodsRunTime.forEach(LOG::info);
+    }
 
     @Test
     public void testDelete() throws Exception {
@@ -97,8 +105,7 @@ public class MealServiceTest {
     @Test
     public void testUpdateNotFound() throws Exception {
         thrown.expect(NotFoundException.class);
-        Meal updated = getUpdated();
-        service.update(updated, ADMIN_ID);
+        service.update(MEAL1, ADMIN_ID);
     }
 
     @Test
