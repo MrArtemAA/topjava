@@ -14,10 +14,9 @@ import static ru.javawebinar.topjava.UserTestData.ADMIN_ID;
 import static ru.javawebinar.topjava.UserTestData.USER_ID;
 
 public abstract class MealServiceTest extends AbstractServiceTest {
-    //private static final Logger LOG = LoggerFactory.getLogger(MealServiceTest.class);
 
     @Autowired
-    private MealService service;
+    protected MealService service;
 
     @Override
     public void testDelete() throws Exception {
