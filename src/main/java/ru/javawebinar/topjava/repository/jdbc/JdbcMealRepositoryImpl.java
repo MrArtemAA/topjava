@@ -1,6 +1,5 @@
 package ru.javawebinar.topjava.repository.jdbc;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -25,7 +24,7 @@ public abstract class JdbcMealRepositoryImpl<DT> implements MealRepository {
 
     private final SimpleJdbcInsert insertMeal;
 
-    protected abstract DT toTimestamp(LocalDateTime dateTime);
+    protected abstract DT toDbDate(LocalDateTime dateTime);
 
     public JdbcMealRepositoryImpl(DataSource dataSource, JdbcTemplate jdbcTemplate, NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
         this.insertMeal = new SimpleJdbcInsert(dataSource)
@@ -42,7 +41,7 @@ public abstract class JdbcMealRepositoryImpl<DT> implements MealRepository {
                 .addValue("id", meal.getId())
                 .addValue("description", meal.getDescription())
                 .addValue("calories", meal.getCalories())
-                .addValue("date_time", toTimestamp(meal.getDateTime()))
+                .addValue("date_time", toDbDate(meal.getDateTime()))
                 .addValue("user_id", userId);
 
         if (meal.isNew()) {
@@ -82,6 +81,6 @@ public abstract class JdbcMealRepositoryImpl<DT> implements MealRepository {
     public List<Meal> getBetween(LocalDateTime startDate, LocalDateTime endDate, int userId) {
         return jdbcTemplate.query(
                 "SELECT * FROM meals WHERE user_id=?  AND date_time BETWEEN  ? AND ? ORDER BY date_time DESC",
-                ROW_MAPPER, userId, toTimestamp(startDate), toTimestamp(endDate));
+                ROW_MAPPER, userId, toDbDate(startDate), toDbDate(endDate));
     }
 }

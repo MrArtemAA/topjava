@@ -23,7 +23,7 @@ public class PostgresJdbcMealRepositoryImpl extends JdbcMealRepositoryImpl<Local
     }
 
     @Override
-    protected LocalDateTime toTimestamp(LocalDateTime dateTime) {
+    protected LocalDateTime toDbDate(LocalDateTime dateTime) {
         return dateTime;
     }
 
