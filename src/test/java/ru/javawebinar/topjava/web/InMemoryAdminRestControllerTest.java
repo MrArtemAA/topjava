@@ -3,6 +3,9 @@ package ru.javawebinar.topjava.web;
 import org.junit.*;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
+import org.springframework.web.context.support.XmlWebApplicationContext;
 import ru.javawebinar.topjava.UserTestData;
 import ru.javawebinar.topjava.model.User;
 import ru.javawebinar.topjava.repository.UserRepository;
@@ -16,14 +19,21 @@ import static ru.javawebinar.topjava.UserTestData.ADMIN;
 import static ru.javawebinar.topjava.UserTestData.USER;
 
 public class InMemoryAdminRestControllerTest {
+    private static XmlWebApplicationContext webAppCtx;
     private static ConfigurableApplicationContext appCtx;
     private static AdminRestController controller;
 
     @BeforeClass
     public static void beforeClass() {
         appCtx = new ClassPathXmlApplicationContext("spring/spring-app.xml", "spring/mock.xml");
-        System.out.println("\n" + Arrays.toString(appCtx.getBeanDefinitionNames()) + "\n");
-        controller = appCtx.getBean(AdminRestController.class);
+
+        webAppCtx = new XmlWebApplicationContext();
+        webAppCtx.setConfigLocation("classpath:spring/spring-mvc.xml");
+        webAppCtx.setParent(appCtx);
+
+        webAppCtx.refresh();
+        System.out.println("\n" + Arrays.toString(webAppCtx.getBeanDefinitionNames()) + "\n");
+        controller = webAppCtx.getBean(AdminRestController.class);
     }
 
     @AfterClass
