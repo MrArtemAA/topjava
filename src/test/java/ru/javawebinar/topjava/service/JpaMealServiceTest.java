@@ -1,7 +1,6 @@
 package ru.javawebinar.topjava.service;
 
 import org.junit.BeforeClass;
-import org.slf4j.LoggerFactory;
 import org.springframework.test.context.ActiveProfiles;
 import ru.javawebinar.topjava.Profiles;
 
@@ -13,7 +12,7 @@ public class JpaMealServiceTest extends MealServiceTest {
 
     @BeforeClass
     public static void setLog() {
-        LOG = LoggerFactory.getLogger(JpaUserServiceTest.class);
+        LOG = getLogger(JpaUserServiceTest.class);
     }
 
 }

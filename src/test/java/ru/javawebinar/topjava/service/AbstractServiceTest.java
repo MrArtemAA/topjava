@@ -6,6 +6,7 @@ import org.junit.rules.Stopwatch;
 import org.junit.runner.Description;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.slf4j.bridge.SLF4JBridgeHandler;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
@@ -30,6 +31,10 @@ import java.util.concurrent.TimeUnit;
 public abstract class AbstractServiceTest {
     static Logger LOG;
     private static StringBuilder results;
+
+    static Logger getLogger(Class clazz) {
+        return LoggerFactory.getLogger(clazz);
+    }
 
     static {
         // Only for postgres driver logging
