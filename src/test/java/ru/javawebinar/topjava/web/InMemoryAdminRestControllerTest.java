@@ -19,7 +19,6 @@ import static ru.javawebinar.topjava.UserTestData.ADMIN;
 import static ru.javawebinar.topjava.UserTestData.USER;
 
 public class InMemoryAdminRestControllerTest {
-    private static XmlWebApplicationContext webAppCtx;
     private static ConfigurableApplicationContext appCtx;
     private static AdminRestController controller;
 
@@ -27,13 +26,8 @@ public class InMemoryAdminRestControllerTest {
     public static void beforeClass() {
         appCtx = new ClassPathXmlApplicationContext("spring/spring-app.xml", "spring/mock.xml");
 
-        webAppCtx = new XmlWebApplicationContext();
-        webAppCtx.setConfigLocation("classpath:spring/spring-mvc.xml");
-        webAppCtx.setParent(appCtx);
-
-        webAppCtx.refresh();
-        System.out.println("\n" + Arrays.toString(webAppCtx.getBeanDefinitionNames()) + "\n");
-        controller = webAppCtx.getBean(AdminRestController.class);
+        System.out.println("\n" + Arrays.toString(appCtx.getBeanDefinitionNames()) + "\n");
+        controller = appCtx.getBean(AdminRestController.class);
     }
 
     @AfterClass

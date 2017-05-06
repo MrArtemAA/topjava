@@ -20,7 +20,7 @@ import static ru.javawebinar.topjava.UserTestData.ADMIN;
 import static ru.javawebinar.topjava.UserTestData.USER;
 
 @WebAppConfiguration
-@ContextConfiguration({"classpath:spring/spring-mvc.xml", "classpath:spring/spring-app.xml", "classpath:spring/mock.xml"})
+@ContextConfiguration({"classpath:spring/spring-app.xml", "classpath:spring/mock.xml"})
 @RunWith(SpringRunner.class)
 public class InMemoryAdminRestControllerSpringTest {
 
