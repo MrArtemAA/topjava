@@ -2,10 +2,15 @@ package ru.javawebinar.topjava.repository;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.springframework.context.annotation.Profile;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import static ru.javawebinar.topjava.Profiles.DATAJPA;
+import static ru.javawebinar.topjava.Profiles.JPA;
+
+@Profile({JPA, DATAJPA})
 public class JpaUtil {
 
     @PersistenceContext
