@@ -12,24 +12,26 @@ import javax.servlet.http.HttpServletRequest;
 
 @Controller
 public class RootController {
-    @Autowired
-    private UserService service;
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String root() {
         return "index";
     }
 
-    @RequestMapping(value = "/users", method = RequestMethod.GET)
+    @Autowired
+    private UserService service;
+
+    @RequestMapping(method = RequestMethod.GET)
     public String users(Model model) {
         model.addAttribute("users", service.getAll());
         return "users";
     }
 
-    @RequestMapping(value = "/users", method = RequestMethod.POST)
+    @RequestMapping(method = RequestMethod.POST)
     public String setUser(HttpServletRequest request) {
         int userId = Integer.valueOf(request.getParameter("userId"));
         AuthorizedUser.setId(userId);
         return "redirect:meals";
     }
+
 }

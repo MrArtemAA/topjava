@@ -22,7 +22,7 @@ import static ru.javawebinar.topjava.util.ValidationUtil.checkNew;
 public class MealRestController {
     private static final Logger LOG = LoggerFactory.getLogger(MealRestController.class);
 
-    private final MealService service;
+    protected final MealService service;
 
     @Autowired
     public MealRestController(MealService service) {
@@ -35,10 +35,11 @@ public class MealRestController {
         return service.get(id, userId);
     }
 
-    public void delete(int id) {
+    public String delete(int id) {
         int userId = AuthorizedUser.id();
         LOG.info("delete meal {} for User {}", id, userId);
         service.delete(id, userId);
+        return "";
     }
 
     public List<MealWithExceed> getAll() {
