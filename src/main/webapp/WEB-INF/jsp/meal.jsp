@@ -13,7 +13,7 @@
     <jsp:useBean id="meal" type="ru.javawebinar.topjava.model.Meal" scope="request"/>
     <h2>${meal.isNew() ? create : update}</h2>
     <hr>
-    <form method="post" action="meals">
+    <form method="post" action="meals/save">
         <input type="hidden" name="id" value="${meal.id}">
         <dl>
             <dt><spring:message code="meals.date"/>:</dt>

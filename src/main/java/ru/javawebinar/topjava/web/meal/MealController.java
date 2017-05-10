@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import ru.javawebinar.topjava.model.Meal;
-import ru.javawebinar.topjava.service.MealService;
 import ru.javawebinar.topjava.util.DateTimeUtil;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,15 +21,11 @@ import java.util.Objects;
  */
 @Controller
 @RequestMapping(value = "/meals")
-public class MealController extends MealRestController {
+public class MealController extends AbstractMealController {
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String root() {
         return "index";
-    }
-
-    public MealController(MealService service) {
-        super(service);
     }
 
     @RequestMapping(method = RequestMethod.GET)
@@ -61,7 +56,7 @@ public class MealController extends MealRestController {
         return "redirect:/meals";
     }
 
-    @RequestMapping(value = "/create", method = RequestMethod.POST)
+    @RequestMapping(value = "/save", method = RequestMethod.POST)
     public String save(HttpServletRequest request) {
         final Meal meal = new Meal(
                 LocalDateTime.parse(request.getParameter("dateTime")),
@@ -73,7 +68,7 @@ public class MealController extends MealRestController {
         } else {
             super.update(meal, getId(request));
         }
-        return "redirect:meals";
+        return "redirect:/meals";
     }
 
     @RequestMapping(method = RequestMethod.POST)
