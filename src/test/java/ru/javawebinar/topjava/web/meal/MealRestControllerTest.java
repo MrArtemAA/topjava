@@ -1,10 +1,12 @@
 package ru.javawebinar.topjava.web.meal;
 
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
 import ru.javawebinar.topjava.AuthorizedUser;
 import ru.javawebinar.topjava.model.Meal;
+import ru.javawebinar.topjava.service.MealService;
 import ru.javawebinar.topjava.web.AbstractControllerTest;
 import ru.javawebinar.topjava.web.json.JsonUtil;
 
@@ -24,6 +26,9 @@ public class MealRestControllerTest extends AbstractControllerTest {
 
     private static final String REST_URL = MealRestController.REST_URL + "/";
 
+    @Autowired
+    private MealService mealService;
+
     @Test
     public void testGet() throws Exception {
         mockMvc.perform(get(REST_URL + MEAL1_ID))
@@ -36,7 +41,7 @@ public class MealRestControllerTest extends AbstractControllerTest {
     @Test
     public void testCreate() throws Exception {
         Meal expected = new Meal(null,
-                LocalDateTime.of(2017, 05, 14, 15, 00,00),
+                LocalDateTime.of(2017, 5, 14, 15, 0,0),
                 "Обед", 1300);
 
         ResultActions action = mockMvc.perform(post(REST_URL)
@@ -56,7 +61,7 @@ public class MealRestControllerTest extends AbstractControllerTest {
 
         updated.setDescription("Полдник");
         updated.setCalories(200);
-        updated.setDateTime(LocalDateTime.of(2017, 05, 14, 16, 30, 00));
+        updated.setDateTime(LocalDateTime.of(2017, 5, 14, 16, 30, 0));
 
         mockMvc.perform(put(REST_URL + MEAL1_ID)
                         .contentType(MediaType.APPLICATION_JSON)
