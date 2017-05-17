@@ -92,26 +92,30 @@ public class MealRestControllerTest extends AbstractControllerTest {
 
     @Test
     public void testGetAll() throws Exception {
-        ResultActions action = mockMvc.perform(get(REST_URL))
+        mockMvc.perform(get(REST_URL))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON));
-
-        MEAL_WITH_EXCEED_MATCHER.contentListMatcher(MealsUtil.getWithExceeded(MEALS, AuthorizedUser.getCaloriesPerDay()));
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(MEAL_WITH_EXCEED_MATCHER.contentListMatcher(
+                        MealsUtil.getWithExceeded(MEALS, AuthorizedUser.getCaloriesPerDay())));
     }
 
     @Test
     public void testGetBetween() throws Exception {
-        final String FILTER = "filter?startDateTime=2015-05-30T05:00:00&endDateTime=2015-05-30T23:59:00";
-        ResultActions action = mockMvc.perform(get(REST_URL + FILTER))
+        final String FILTER = "filter";
+        final String DATETIME1 = "2015-05-30T05:00:00";
+        final String DATETIME2 = "2015-05-30T23:59:00";
+
+        mockMvc.perform(get(REST_URL + FILTER)
+            .param("startDateTime", DATETIME1)
+            .param("endDatetime", DATETIME2))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON));
-
-        MEAL_WITH_EXCEED_MATCHER.contentListMatcher(MealsUtil.getWithExceeded(
-                Arrays.asList(MEAL3, MEAL2, MEAL1),
-                AuthorizedUser.getCaloriesPerDay()
-        ));
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(MEAL_WITH_EXCEED_MATCHER.contentListMatcher(MealsUtil.getWithExceeded(
+                        Arrays.asList(MEAL3, MEAL2, MEAL1),
+                        AuthorizedUser.getCaloriesPerDay()
+                )));
     }
 
 }
