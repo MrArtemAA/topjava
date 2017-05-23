@@ -15,45 +15,51 @@
             <h3><spring:message code="meals.title"/></h3>
 
             <div class="view-box">
-                <%--<form method="post" action="meals/filter">--%>
-                <form class="form-horizontal" id="filterForm">
-                    <div class="form-group form-group-sm">
-                        <label for="startDate" class="control-label col-xs-2"><spring:message code="meals.startDate"/></label>
+                <div class="row">
+                    <div class="col-sm-7"></div>
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <form class="form-horizontal" id="filterForm">
+                                <div class="form-group form-group-sm">
+                                    <label for="startDate" class="control-label col-sm-3"><spring:message code="meals.startDate"/></label>
 
-                        <div class="col-xs-4">
-                            <input type="date" class="form-control" id="startDate" name="startDate" placeholder="<spring:message code="meals.startDate"/>">
+                                    <div class="col-sm-3">
+                                        <input type="date" class="form-control" id="startDate" name="startDate" placeholder="<spring:message code="meals.startDate"/>">
+                                    </div>
+
+                                    <label for="startTime" class="control-label col-sm-3"><spring:message code="meals.startTime"/></label>
+
+                                    <div class="col-sm-3">
+                                        <input type="time" class="form-control" id="startTime" name="startTime" placeholder="<spring:message code="meals.startTime"/>">
+                                    </div>
+                                </div>
+
+                                <div class="form-group form-group-sm">
+                                    <label for="endDate" class="control-label col-sm-3"><spring:message code="meals.endDate"/></label>
+
+                                    <div class="col-sm-3">
+                                        <input type="date" class="form-control" id="endDate" name="endDate" placeholder="<spring:message code="meals.endDate"/>">
+                                    </div>
+
+                                    <label for="endTime" class="control-label col-sm-3"><spring:message code="meals.endTime"/></label>
+
+                                    <div class="col-sm-3">
+                                        <input type="time" class="form-control" id="endTime" name="endTime" placeholder="<spring:message code="meals.endTime"/>">
+                                    </div>
+                                </div>
+                            </form>
                         </div>
-
-                        <label for="startTime" class="control-label col-xs-2"><spring:message code="meals.startTime"/></label>
-
-                        <div class="col-xs-4">
-                            <input type="time" class="form-control" id="startTime" name="startTime" placeholder="<spring:message code="meals.startTime"/>">
-                        </div>
-                    </div>
-
-                    <div class="form-group form-group-sm">
-                        <label for="endDate" class="control-label col-xs-2"><spring:message code="meals.endDate"/></label>
-
-                        <div class="col-xs-4">
-                            <input type="date" class="form-control" id="endDate" name="endDate" placeholder="<spring:message code="meals.endDate"/>">
-                        </div>
-
-                        <label for="endTime" class="control-label col-xs-2"><spring:message code="meals.endTime"/></label>
-
-                        <div class="col-xs-4">
-                            <input type="time" class="form-control" id="endTime" name="endTime" placeholder="<spring:message code="meals.endTime"/>">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <div class="col-xs-12">
-                            <button type="submit" class="btn btn-primary btn-sm">
+                        <div class="panel-footer">
+                            <button type="button" class="btn btn-primary btn-sm" onclick="updateTable()">
                                 <span class="glyphicon glyphicon-filter" aria-hidden="true"></span>
                                 <spring:message code="meals.filter"/>
                             </button>
+                            <a class="small" onclick="clearFilter()">
+                                <spring:message code="meals.clearFilter"/>
+                            </a>
                         </div>
                     </div>
-                </form>
+                </div>
                 <hr>
                 <a class="btn btn-info" onclick="add()">
                     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
@@ -72,7 +78,7 @@
                     </thead>
                     <c:forEach items="${meals}" var="meal">
                         <jsp:useBean id="meal" scope="page" type="ru.javawebinar.topjava.to.MealWithExceed"/>
-                        <tr class="${meal.exceed ? 'exceeded' : 'normal'} model-id" id="${meal.id}">
+                        <tr class="${meal.exceed ? 'bad' : 'normal'} model-id" id="${meal.id}">
                             <td>
                                     <%--${meal.dateTime.toLocalDate()} ${meal.dateTime.toLocalTime()}--%>
                                     <%--<%=TimeUtil.toString(meal.getDateTime())%>--%>

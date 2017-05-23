@@ -33,22 +33,20 @@ $(function () {
         ]
     });
     makeEditable();
-
-    $('#filterForm').submit(function () {
-        filter();
-        return false;
-    });
 });
 
 function filter() {
+
+}
+
+function updateTable() {
     var form = $('#filterForm');
     $.post(ajaxUrl + "filter",
         form.serialize(),
-        function (data) {
-        datatableApi.clear();
-        $.each(data, function (key, item) {
-            datatableApi.row.add(item);
-        });
-        datatableApi.draw();
-    });
+        reDrawTable);
+}
+
+function clearFilter() {
+    $('#filterForm')[0].reset();
+    updateTable();
 }

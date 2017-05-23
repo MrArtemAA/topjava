@@ -19,7 +19,8 @@ dd {
     color: green;
 }
 
-.exceeded {
+/*exceed meal calories or disabled user*/
+.bad {
     color: red;
 }
 

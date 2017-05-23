@@ -40,3 +40,11 @@ $(function () {
     });
     makeEditable();
 });
+
+function updateTable() {
+    $.get(ajaxUrl, reDrawTable);
+}
+
+function changeUserState(row, id) {
+    row.find("")
+}
