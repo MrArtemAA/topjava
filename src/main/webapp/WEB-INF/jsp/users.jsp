@@ -40,7 +40,8 @@
                             <td>${user.roles}</td>
                             <td>
                                 <input type="checkbox"
-                                       <c:if test="${user.enabled}">checked</c:if> id="${user.id}"/>
+                                       <c:if test="${user.enabled}">checked</c:if>
+                                        onclick="changeUserState('${user.id}', $(this).is(':checked'))"/>
                             </td>
                             <td><fmt:formatDate value="${user.registered}" pattern="dd-MMMM-yyyy"/></td>
                             <td><a class="btn btn-xs btn-primary">

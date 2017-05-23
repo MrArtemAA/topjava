@@ -21,7 +21,9 @@ public abstract class AbstractUserController {
 
     public List<User> getAll() {
         log.info("getAll");
-        return service.getAll();
+        List<User> result = service.getAll();
+        log.info("getAll result: " + result);
+        return result;
     }
 
     public User get(int id) {
@@ -50,4 +52,10 @@ public abstract class AbstractUserController {
         log.info("getByEmail {}", email);
         return service.getByEmail(email);
     }
+
+    public void changeUserState(int id, boolean state) {
+        log.info("changeUserState {} {}", id, state);
+        service.changeUserState(id, state);
+    }
+
 }

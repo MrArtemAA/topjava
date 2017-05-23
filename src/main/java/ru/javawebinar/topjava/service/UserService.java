@@ -23,4 +23,6 @@ public interface UserService {
     void evictCache();
 
     User getWithMeals(int id);
+
+    public void changeUserState(int id, boolean state);
 }

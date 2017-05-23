@@ -45,6 +45,11 @@ function updateTable() {
     $.get(ajaxUrl, reDrawTable);
 }
 
-function changeUserState(row, id) {
-    row.find("")
+function changeUserState(id, state) {
+    $.ajax({
+        url: ajaxUrl + id,
+        type: 'POST',
+        data: 'state=' + state,
+        success: updateTable
+    })
 }
