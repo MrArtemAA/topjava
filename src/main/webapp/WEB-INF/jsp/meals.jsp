@@ -87,7 +87,7 @@
                             </td>
                             <td>${meal.description}</td>
                             <td>${meal.calories}</td>
-                            <td><a>
+                            <td><a onclick="updateRow(${meal.id})">
                                 <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                             </a></td>
                             <td><a onclick="deleteRow(${meal.id})">
@@ -151,5 +151,11 @@
         </div>
     </div>
 </div>
+<script type="text/javascript">
+    var i18n = [];
+    i18n["addTitle"] = '<spring:message code="meals.add"/>';
+    i18n["editTitle"] = '<spring:message code="meals.edit"/>';
+</script>
+<jsp:include page="fragments/initCommonI18n.jsp"/>
 </body>
 </html>
