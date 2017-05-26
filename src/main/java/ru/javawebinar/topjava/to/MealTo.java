@@ -72,4 +72,15 @@ public class MealTo implements Serializable {
     public boolean isNew() {
         return id == null;
     }
+
+    @Override
+    public String toString() {
+        return "Meal{" +
+                "id=" + getId() +
+                ", dateTime=" + dateTime +
+                ", description='" + description + '\'' +
+                ", calories=" + calories +
+                '}';
+    }
+
 }
