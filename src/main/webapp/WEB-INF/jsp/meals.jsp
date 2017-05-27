@@ -19,7 +19,7 @@
 
             <div class="view-box">
                 <div class="row">
-                    <div class="col-sm-7">
+                    <div class="col-sm-8">
                         <div class="panel panel-default">
                             <div class="panel-body">
                                 <form class="form-horizontal" id="filter">
@@ -27,43 +27,55 @@
                                         <label class="control-label col-sm-2" for="startDate"><spring:message
                                                 code="meals.startDate"/>:</label>
 
-                                        <div class='col-sm-3 input-group date' id='startDatePicker'>
-                                            <input class="form-control" type='text' name="startDate" id="startDate"/>
-                                            <span class="input-group-addon">
-                                                <span class="glyphicon glyphicon-calendar"></span>
-                                            </span>
+                                        <div class="col-sm-3">
+                                            <div class='input-group date' id='startDatePicker'>
+                                                <input class="form-control" type='text' name="startDate" id="startDate"/>
+                                                <span class="input-group-addon">
+                                                    <span class="glyphicon glyphicon-calendar"></span>
+                                                </span>
+                                            </div>
                                         </div>
 
                                         <label class="control-label col-sm-3" for="startTime"><spring:message
                                                 code="meals.startTime"/>:</label>
 
-                                        <div class='col-sm-2 input-group date' id='startTimePicker'>
-                                            <input class="form-control" type='text' name="startTime" id="startTime"/>
-                                            <span class="input-group-addon">
-                                                <span class="glyphicon glyphicon-calendar"></span>
-                                            </span>
+                                        <div class="col-sm-2">
+                                            <div class='input-group date' id='startTimePicker'>
+                                                <input class="form-control" type='text' name="startTime" id="startTime"/>
+                                                <span class="input-group-addon">
+                                                    <span class="glyphicon glyphicon-time"></span>
+                                                </span>
+                                            </div>
                                         </div>
+
                                     </div>
+
                                     <div class="form-group">
                                         <label class="control-label col-sm-2" for="endDate"><spring:message
                                                 code="meals.endDate"/>:</label>
 
-                                        <div class='col-sm-3 input-group date' id='endDatePicker'>
-                                            <input class="form-control" type='text' name="endDate" id="endDate"/>
-                                            <span class="input-group-addon">
-                                                <span class="glyphicon glyphicon-calendar"></span>
-                                            </span>
+                                        <div class="col-sm-3">
+                                            <div class='input-group date' id='endDatePicker'>
+                                                <input class="form-control" type='text' name="endDate" id="endDate"/>
+                                                <span class="input-group-addon">
+                                                    <span class="glyphicon glyphicon-calendar"></span>
+                                                </span>
+                                            </div>
                                         </div>
+
 
                                         <label class="control-label col-sm-3" for="endTime"><spring:message
                                                 code="meals.endTime"/>:</label>
 
-                                        <div class='col-sm-2 input-group date' id='endTimePicker'>
-                                            <input class="form-control" type='text' name="endTime" id="endTime"/>
-                                            <span class="input-group-addon">
-                                                <span class="glyphicon glyphicon-calendar"></span>
-                                            </span>
+                                        <div class="col-sm-2">
+                                            <div class='input-group date' id='endTimePicker'>
+                                                <input class="form-control" type='text' name="endTime" id="endTime"/>
+                                                <span class="input-group-addon">
+                                                    <span class="glyphicon glyphicon-time"></span>
+                                                </span>
+                                            </div>
                                         </div>
+
                                     </div>
                                 </form>
                             </div>
