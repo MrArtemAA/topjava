@@ -39,7 +39,7 @@
                                         <label class="control-label col-sm-3" for="startTime"><spring:message
                                                 code="meals.startTime"/>:</label>
 
-                                        <div class="col-sm-2">
+                                        <div class="col-sm-3">
                                             <div class='input-group date' id='startTimePicker'>
                                                 <input class="form-control" type='text' name="startTime" id="startTime"/>
                                                 <span class="input-group-addon">
@@ -67,7 +67,7 @@
                                         <label class="control-label col-sm-3" for="endTime"><spring:message
                                                 code="meals.endTime"/>:</label>
 
-                                        <div class="col-sm-2">
+                                        <div class="col-sm-3">
                                             <div class='input-group date' id='endTimePicker'>
                                                 <input class="form-control" type='text' name="endTime" id="endTime"/>
                                                 <span class="input-group-addon">
@@ -127,8 +127,13 @@
                                 code="meals.dateTime"/></label>
 
                         <div class="col-xs-9">
-                            <input type="datetime-local" class="form-control" id="dateTime" name="dateTime"
-                                   placeholder="<spring:message code="meals.dateTime"/>">
+                            <div class='input-group date' id='dateTimePicker'>
+                                <input class="form-control" type='text' name="dateTime" id="dateTime"
+                                       placeholder="<spring:message code="meals.dateTime"/>"/>
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div>
                         </div>
                     </div>
                     <div class="form-group">

@@ -57,11 +57,7 @@ $(function () {
             ]
         ],
         "createdRow": function (row, data, dataIndex) {
-            if (data.exceed) {
-                $(row).addClass("exceeded");
-            } else {
-                $(row).addClass("normal");
-            }
+            data.exceed ? $(row).addClass("exceeded") : $(row).addClass("normal");
         },
         "initComplete": makeEditable
     });
@@ -77,5 +73,8 @@ $(function () {
     });
     $('#endTimePicker').datetimepicker({
         format: 'HH:mm'
+    });
+    $('#dateTimePicker').datetimepicker({
+        format: 'DD.MM.YYYY HH:mm'
     });
 });
