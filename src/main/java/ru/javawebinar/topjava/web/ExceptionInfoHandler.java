@@ -6,6 +6,8 @@ import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.BindException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 import ru.javawebinar.topjava.util.ValidationUtil;
 import ru.javawebinar.topjava.util.exception.ErrorInfo;
@@ -33,6 +35,20 @@ public class ExceptionInfoHandler {
         return logAndGetErrorInfo(req, e, true);
     }
 
+    @ResponseStatus(value = HttpStatus.UNPROCESSABLE_ENTITY)
+    @ExceptionHandler(BindException.class)
+    @ResponseBody
+    public ErrorInfo handleBindException(HttpServletRequest req, BindException e) {
+        return logAndGetErrorInfo(req, ValidationUtil.getErrorResponse(e.getBindingResult()));
+    }
+
+    @ResponseStatus(value = HttpStatus.UNPROCESSABLE_ENTITY)
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    @ResponseBody
+    public ErrorInfo handleMethodArgumentNotValidException(HttpServletRequest req, MethodArgumentNotValidException e ) {
+        return logAndGetErrorInfo(req, ValidationUtil.getErrorResponse(e.getBindingResult()));
+    }
+
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(Exception.class)
     @ResponseBody
@@ -49,4 +65,10 @@ public class ExceptionInfoHandler {
         }
         return new ErrorInfo(req.getRequestURL(), rootCause);
     }
+
+    private static ErrorInfo logAndGetErrorInfo(HttpServletRequest req, String message) {
+        LOG.warn("Error at request " + req.getRequestURL() + ": " + message);
+        return new ErrorInfo(req.getRequestURL(), message);
+    }
+
 }
