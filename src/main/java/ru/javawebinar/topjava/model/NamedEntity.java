@@ -1,15 +1,17 @@
 package ru.javawebinar.topjava.model;
 
 import org.hibernate.validator.constraints.NotBlank;
+import ru.javawebinar.topjava.View;
 
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
+import javax.validation.groups.Default;
 
 
 @MappedSuperclass
 public class NamedEntity extends BaseEntity {
 
-    @NotBlank
+    @NotBlank(groups = {View.ValidatedREST.class, Default.class})
     @Column(name = "name", nullable = false)
     protected String name;
 

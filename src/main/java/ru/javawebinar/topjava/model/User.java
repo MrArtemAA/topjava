@@ -12,6 +12,7 @@ import org.springframework.util.CollectionUtils;
 import ru.javawebinar.topjava.View;
 
 import javax.persistence.*;
+import javax.validation.groups.Default;
 import java.util.*;
 
 import static ru.javawebinar.topjava.util.UserUtil.DEFAULT_CALORIES_PER_DAY;
@@ -34,13 +35,13 @@ public class User extends NamedEntity {
     public static final String ALL_SORTED = "User.getAllSorted";
 
     @Column(name = "email", nullable = false, unique = true)
-    @Email
-    @NotBlank
+    @Email(groups = {View.ValidatedREST.class, Default.class})
+    @NotBlank(groups = {View.ValidatedREST.class, Default.class})
     private String email;
 
     @Column(name = "password", nullable = false)
-    @NotBlank
-    @Length(min = 5)
+    @NotBlank(groups = {View.ValidatedREST.class, Default.class})
+    @Length(min = 5, groups = {View.ValidatedREST.class, Default.class})
     @JsonView(View.JsonREST.class)
     private String password;
 
@@ -60,7 +61,7 @@ public class User extends NamedEntity {
     private Set<Role> roles;
 
     @Column(name = "calories_per_day", columnDefinition = "int default 2000")
-    @Range(min = 10, max = 10000)
+    @Range(min = 10, max = 10000, groups = {View.ValidatedREST.class, Default.class})
     private int caloriesPerDay = DEFAULT_CALORIES_PER_DAY;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")//, cascade = CascadeType.REMOVE, orphanRemoval = true)
