@@ -2,7 +2,9 @@ package ru.javawebinar.topjava.web.meal;
 
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.transaction.TestTransaction;
 import org.springframework.test.web.servlet.ResultActions;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.service.MealService;
@@ -92,6 +94,22 @@ public class MealRestControllerTest extends AbstractControllerTest {
                 .content(JsonUtil.writeValue(updated))
                 .with(userHttpBasic(USER)))
                 .andExpect(status().isUnprocessableEntity());
+    }
+
+
+
+    @Test(expected = DataIntegrityViolationException.class)
+    public void testUpdateDuplicate() throws Exception {
+        Meal expected = MEAL1;
+        expected.setId(null);
+        ResultActions action = mockMvc.perform(post(REST_URL)
+                .contentType(MediaType.APPLICATION_JSON)
+                .with(userHttpBasic(USER))
+                .content(JsonUtil.writeValue(expected)))
+                .andDo(print());
+
+        TestTransaction.flagForCommit();
+        TestTransaction.end();
     }
 
     @Test

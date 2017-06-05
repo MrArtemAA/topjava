@@ -1,7 +1,9 @@
 package ru.javawebinar.topjava.web.user;
 
 import org.junit.Test;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.transaction.TestTransaction;
 import org.springframework.test.web.servlet.ResultActions;
 import ru.javawebinar.topjava.TestUtil;
 import ru.javawebinar.topjava.model.Role;
@@ -129,6 +131,20 @@ public class AdminRestControllerTest extends AbstractControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .with(userHttpBasic(ADMIN))
                 .content(JsonUtil.writeValue(expected))).andExpect(status().isUnprocessableEntity());
+    }
+
+    @Test(expected = DataIntegrityViolationException.class)
+    public void testCreateDuplicate() throws Exception {
+        User expected = USER;
+        expected.setId(null);
+        ResultActions action = mockMvc.perform(post(REST_URL)
+                .contentType(MediaType.APPLICATION_JSON)
+                .with(userHttpBasic(ADMIN))
+                .content(JsonUtil.writeValue(expected)))
+                .andDo(print());
+
+        TestTransaction.flagForCommit();
+        TestTransaction.end();
     }
 
     @Test

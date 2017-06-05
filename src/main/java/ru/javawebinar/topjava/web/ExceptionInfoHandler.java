@@ -34,9 +34,12 @@ public class ExceptionInfoHandler {
     @ResponseBody
     public ErrorInfo conflict(HttpServletRequest req, DataIntegrityViolationException e) {
         Throwable cause = e.getCause();
-        if (cause != null && cause instanceof ConstraintViolationException &&
-                ((ConstraintViolationException)cause).getConstraintName().equals("users_unique_email_idx")) {
-            return logAndGetErrorInfo(req, "User with this email already present in application");
+        if (cause != null && cause instanceof ConstraintViolationException) {
+            if (((ConstraintViolationException)cause).getConstraintName().equals("users_unique_email_idx")) {
+                return logAndGetErrorInfo(req, "User with this email already present in application");
+            } else if (((ConstraintViolationException)cause).getConstraintName().equals("meals_unique_user_datetime_idx")) {
+                return logAndGetErrorInfo(req, "Meal at such date and time already present");
+            }
         }
         return logAndGetErrorInfo(req, e, true);
     }
