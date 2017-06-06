@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
+import ru.javawebinar.topjava.AuthorizedUser;
 import ru.javawebinar.topjava.model.User;
 import ru.javawebinar.topjava.service.UserService;
 import ru.javawebinar.topjava.to.UserTo;
@@ -30,7 +31,8 @@ public class UserFormValidator implements Validator {
 
         try {
             User checkUser = userService.getByEmail(userTo.getEmail());
-            if (userTo.isNew() || !checkUser.getId().equals(userTo.getId())) {
+            AuthorizedUser authorizedUser = AuthorizedUser.safeGet();
+            if (authorizedUser == null || !checkUser.getId().equals(AuthorizedUser.id())) {
                 errors.rejectValue("email", null,"User with this email already present in application");
             }
         } catch (NotFoundException ignored) {
