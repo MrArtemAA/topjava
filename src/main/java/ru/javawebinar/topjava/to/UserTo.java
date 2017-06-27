@@ -15,6 +15,7 @@ public class UserTo extends BaseTo implements Serializable {
 
     @Email
     @NotBlank
+    @SafeHtml  // https://stackoverflow.com/questions/17480809
     private String email;
 
     @Length(min = 5, max = 32)
